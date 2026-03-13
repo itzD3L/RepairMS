@@ -6,6 +6,7 @@ import { MdDevicesOther } from "react-icons/md";
 import { IoTvOutline } from "react-icons/io5";
 import { Card } from "@/app/components/ui/card";
 import { getTimeUntilDeadline, getTicketAlertLevelCard } from "@/app/utils/ticketUtils";
+import { Badge } from "@/app/components/ui/badge";
 
 export function TicketCard({ ticket }: { ticket: TicketCardType }) {
     const {
@@ -19,6 +20,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
         etr,
         status,
         total_cost,
+        paid,
     } = ticket;
 
     const alertLevel = getTicketAlertLevelCard(ticket);
@@ -60,7 +62,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
     return (
         <Link href={`/ticket/${id}`}>
             <Card
-                className={`p-4 cursor-pointer hover:shadow-xl transition-all duration-200 ${alertColors[alertLevel]} ${alertGlow[alertLevel]} ${isDragging ? "opacity-50" : ""} group`}
+                className={`p-4 cursor-pointer hover:shadow-xl transition-all duration-200 ${alertColors[alertLevel]} ${alertGlow[alertLevel]} group`}
             >
                 <div className="flex justify-between items-start mb-3">
                     <div className="flex items-center gap-2">
@@ -101,7 +103,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
                         <CiClock2 className="size-3.5 text-slate-600" />
                         <span className="font-medium text-slate-700">
                             {getTimeUntilDeadline(
-                                ticket.estimatedCompletionDate,
+                                etr || null,
                             )}
                         </span>
                     </div>
@@ -109,12 +111,12 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
                     {total_cost > 0 && (
                         <div className="flex justify-between items-center mt-3 pt-3 border-t border-slate-100">
                             <Badge
-                                variant={ticket.paid ? "default" : "secondary"}
+                                variant={paid ? "default" : "secondary"}
                                 className="font-bold shadow-sm"
                             >
-                                ${ticket.cost}
+                                ${total_cost}
                             </Badge>
-                            {!ticket.paid && ticket.status === "ready" && (
+                            {!paid && status === "Ready for Pickup" && (
                                 <span className="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded-md">
                                     Payment pending
                                 </span>

@@ -4,61 +4,62 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { NavLinkType, TicketStatus } from "@/app/lib/definitions";
 import clsx from "clsx";
-import { HiOutlineQueueList } from "react-icons/hi2";
-import { LuLayoutDashboard } from "react-icons/lu";
-import { LiaDiagnosesSolid, LiaToolsSolid } from "react-icons/lia";
-import { GoCpu } from "react-icons/go";
-import { CiBoxes } from "react-icons/ci";
-import { MdPlaylistAddCheck, MdMenu } from "react-icons/md";
-import { FaRegBell } from "react-icons/fa";
-import { IoMdClose } from "react-icons/io";
-import { IoSettingsOutline, IoSearch } from "react-icons/io5";
-import { GoPlus } from "react-icons/go";
+import { LayoutDashboard, Logs, SearchAlert, Toolbox, Cpu, Boxes, ListCheck, Menu, Settings, Search, Plus, CircleX } from "lucide-react";
+// import { HiOutlineQueueList } from "react-icons/hi2";
+// import { LuLayoutDashboard } from "react-icons/lu";
+// import { LiaDiagnosesSolid, LiaToolsSolid } from "react-icons/lia";
+// import { GoCpu } from "react-icons/go";
+// import { CiBoxes } from "react-icons/ci";
+// import { MdPlaylistAddCheck, MdMenu } from "react-icons/md";
+// import { FaRegBell } from "react-icons/fa";
+// import { IoMdClose } from "react-icons/io";
+// import { IoSettingsOutline, IoSearch } from "react-icons/io5";
+// import { GoPlus } from "react-icons/go";
 import { useState, useEffect } from "react";
-import { Button } from "../button";
-import { Input } from "../input";
+import { Button } from "../../reusable/button";
+import { Input } from "../../reusable/input";
 
 const navItems: NavLinkType[] = [
     {
         name: "Daily Digest",
         href: "/",
-        icon: LuLayoutDashboard,
+        icon: LayoutDashboard,
         count: 0,
     },
     {
         name: "Queued",
         href: "/queued",
-        icon: HiOutlineQueueList,
+        icon: Logs,
         count: 0,
     },
     {
         name: "Diagnosing",
         href: "/diagnosing",
-        icon: LiaDiagnosesSolid,
+        icon: SearchAlert,
         count: 0,
     },
     {
         name: "Waiting for Parts",
         href: "/waiting-for-parts",
-        icon: GoCpu,
+        icon: Cpu,
         count: 0,
     },
     {
         name: "Repairing",
         href: "/repairing",
-        icon: LiaToolsSolid,
+        icon: Toolbox,
         count: 0,
     },
     {
         name: "Ready for Pickup",
         href: "/pickup",
-        icon: CiBoxes,
+        icon: Boxes,
         count: 0,
     },
     {
         name: "Completed",
         href: "/completed",
-        icon: MdPlaylistAddCheck,
+        icon: ListCheck,
         count: 0,
     },
 ];
@@ -89,9 +90,9 @@ export default function Header() {
                                 }
                             >
                                 {isMobileMenuOpen ? (
-                                    <IoMdClose className="size-5" />
+                                    <CircleX className="size-5" />
                                 ) : (
-                                    <MdMenu className="size-5" />
+                                    <Menu className="size-5" />
                                 )}
                             </Button>
                             <div className="bg-gradient-to-br from-sky-500 to-blue-600 p-2 sm:p-2.5 rounded-xl shadow-lg shadow-blue-500/20 hidden sm:block">
@@ -140,13 +141,13 @@ export default function Header() {
                                     size="icon"
                                     className="hover:bg-slate-50 transition-colors hidden sm:flex h-9 w-9"
                                 >
-                                    <IoSettingsOutline className="size-4 text-slate-600" />
+                                    <Settings className="size-4 text-slate-600" />
                                 </Button>
                             </Link>
 
                             <Link key="new-ticket" href="/new-ticket">
                                 <Button className="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 shadow-lg shadow-blue-500/30 transition-all text-xs sm:text-sm px-3 sm:px-4 h-9">
-                                    <GoPlus className="size-4 sm:mr-2" />
+                                    <Plus className="size-4 sm:mr-2" />
                                     <span className="hidden sm:inline">
                                         New Ticket
                                     </span>
@@ -156,7 +157,7 @@ export default function Header() {
                     </div>
                     <div className="mt-4 flex flex-col sm:flex-row sm:items-center gap-3">
                         <div className="relative flex-1 max-w-md w-full">
-                            <IoSearch className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-slate-400" />
                             <Input
                                 placeholder="Search tickets, customers, devices..."
                                 value={searchQuery}
@@ -273,7 +274,7 @@ export default function Header() {
                                 size="icon"
                                 onClick={() => setIsMobileMenuOpen(false)}
                             >
-                                <IoMdClose className="size-4" />
+                                <CircleX className="size-4" />
                             </Button>
                         </div>
                         <div className="p-3 space-y-1 flex-1 overflow-y-auto">
@@ -284,7 +285,7 @@ export default function Header() {
                             >
                                 <button className="w-full flex items-center justify-between px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-slate-600 hover:bg-slate-50 hover:text-slate-900 mb-2 border-b border-slate-100 pb-4">
                                     <div className="flex items-center gap-2">
-                                        <IoSettingsOutline className="size-4" />
+                                        <Settings className="size-4" />
                                         Settings
                                     </div>
                                 </button>

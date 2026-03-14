@@ -1,16 +1,11 @@
 import { TicketCardType } from "@/app/lib/definitions";
-import Link from "next/link";
-import { CiLaptop, CiDesktop, CiSpeaker, CiCircleAlert, CiUser, CiClock2 } from "react-icons/ci";
-import { IoIosPhonePortrait, IoIosTabletPortrait } from "react-icons/io";
-import { MdDevicesOther } from "react-icons/md";
-import { IoTvOutline } from "react-icons/io5";
-import { Card } from "@/app/components/ui/card";
+import Link from "next/link";import { Smartphone, Laptop, Tablet, Clock, User, AlertCircle, Tv, Speaker, Cable } from 'lucide-react';
+import { Card } from "@/app/components/reusable/card";
 import { getTimeUntilDeadline, getTicketAlertLevelCard } from "@/app/utils/ticketUtils";
-import { Badge } from "@/app/components/ui/badge";
+import { Badge } from "@/app/components/reusable/badge";
 
 export function TicketCard({ ticket }: { ticket: TicketCardType }) {
     const {
-        id,
         ticket_number,
         customer_name,
         device_type,
@@ -28,21 +23,19 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
     const getDeviceIcon = (size: string) => {
         switch (device_type) {
             case "phone":
-                return <IoIosPhonePortrait className={size} />;
+                return <Smartphone className={size} />;
             case "laptop":
-                return <CiLaptop className={size} />;
+                return <Laptop className={size} />;
             case "tablet":
-                return <IoIosTabletPortrait className={size} />;
-            case "desktop":
-                return <CiDesktop className={size} />;
+                return <Tablet className={size} />;
             case "other":
-                return <MdDevicesOther className={size} />;
+                return <Cable className={size} />;
             case "tv":
-                return <IoTvOutline className={size} />;
+                return <Tv className={size} />;
             case "speaker":
-                return <CiSpeaker className={size} />;
+                return <Speaker className={size} />;
             default:
-                return <MdDevicesOther className={size} />;
+                return <Cable className={size} />;
         }
     };
 
@@ -60,7 +53,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
     };
 
     return (
-        <Link href={`/ticket/${id}`}>
+        <Link href={`/ticket/${ticket_number}`}>
             <Card
                 className={`p-4 cursor-pointer hover:shadow-xl transition-all duration-200 ${alertColors[alertLevel]} ${alertGlow[alertLevel]} group`}
             >
@@ -77,7 +70,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
                         <div
                             className={`p-1 rounded-full ${alertLevel === "warning" ? "bg-amber-100" : "bg-red-100"}`}
                         >
-                            <CiCircleAlert
+                            <AlertCircle
                                 className={`size-4 ${alertLevel === "warning" ? "text-amber-600" : "text-red-600"}`}
                             />
                         </div>
@@ -86,7 +79,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
 
                 <div className="space-y-2.5">
                     <div className="flex items-center gap-2 text-sm font-medium text-slate-700">
-                        <CiUser className="size-3.5 text-slate-500" />
+                        <User className="size-3.5 text-slate-500" />
                         <span>{customer_name}</span>
                     </div>
 
@@ -100,7 +93,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
                     </div>
 
                     <div className="flex items-center gap-2 text-xs mt-3 px-2 py-1.5 bg-slate-50 rounded-lg border border-slate-100">
-                        <CiClock2 className="size-3.5 text-slate-600" />
+                        <Clock className="size-3.5 text-slate-600" />
                         <span className="font-medium text-slate-700">
                             {getTimeUntilDeadline(
                                 etr || null,

@@ -116,7 +116,7 @@ export function TicketCard({ ticket }: { ticket: TicketCardType }) {
                             >
                                 ${total_cost}
                             </Badge>
-                            {!paid && status === "Ready for Pickup" && (
+                            {!paid && status === "pickup" && (
                                 <span className="text-xs font-medium text-orange-600 bg-orange-50 px-2 py-1 rounded-md">
                                     Payment pending
                                 </span>

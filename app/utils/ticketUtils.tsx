@@ -1,11 +1,11 @@
-import { TicketCardType } from "../lib/definitions";
+import { TicketCardType, TicketType } from "../lib/definitions";
 
-export const getTicketAlertLevelCard = (ticket: TicketCardType): 'normal' | 'warning' | 'danger' => {
+export const getTicketAlertLevel = (ticket: TicketCardType | TicketType): 'normal' | 'warning' | 'danger' => {
     const now = new Date();
-    const deadline = new Date(ticket.etr || new Date());
-    const hoursUntilDeadline = (deadline.getTime() - now.getTime()) / (1000 * 60 * 60);
+    const deadline = ticket.etr ? new Date(ticket.etr) : null;
+    const hoursUntilDeadline = deadline ? (deadline.getTime() - now.getTime()) / (1000 * 60 * 60) : 0;
     
-    if (ticket.status === 'Completed' || ticket.status === 'Ready for Pickup') {
+    if (ticket.status === 'completed' || ticket.status === 'pickup') {
         return 'normal';
     }
     
@@ -18,8 +18,8 @@ export const getTicketAlertLevelCard = (ticket: TicketCardType): 'normal' | 'war
     return 'normal';
 };
 
-export const getTimeUntilDeadline = (deadline: Date | null): string => {
-    if (!deadline) {
+export const getTimeUntilDeadline = (deadline: Date | undefined): string => {
+    if (!deadline || deadline === undefined) {
         return 'No deadline';
     }
 

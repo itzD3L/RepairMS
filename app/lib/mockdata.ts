@@ -29,7 +29,7 @@
 
     
 */}
-import { DeviceType, TicketCardType, TicketStatus } from "./definitions";
+import { DeviceType, TicketCardType, TicketDetailsType, TicketStatus } from "./definitions";
 
 interface customer {
     id: string;
@@ -193,4 +193,32 @@ const mockDataTicketCard: TicketCardType[] = mockDataTicket.map((ticket) => ({
     paid: ticket.payment.paid,
 }));
 
-export { mockDataCustomer, mockDataTicket, mockDataTicketCard };
+const mockDataTicketDetail : TicketDetailsType = {
+    id: '1',
+    ticket_number: 'TKX-023',
+    customer_id: '50',
+    customer_name: 'Marchus Deligero',
+    customer_phone: '09123456789',
+    customer_email: 'marchus.deligero@example.com',
+    device_type: 'phone',
+    device_brand: 'Apple',
+    device_model: 'iPhone 13',
+    issue_description: 'The phone is not charging',
+    technician_notes: undefined,
+    etr: undefined,
+    photo: null,
+    timeline: {
+        created_at: new Date(),
+        updated_at: new Date(),
+    },
+    payment: {
+        repair_cost: 100,
+        parts_cost: 50,
+        tax: 10,
+        total: 160,
+        paid: false,
+    },
+    status: 'queued',
+}
+
+export { mockDataCustomer, mockDataTicket, mockDataTicketCard, mockDataTicketDetail };

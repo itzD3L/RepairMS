@@ -45,8 +45,9 @@ interface ticket {
     device_type: DeviceType;
     device_brand: string;
     device_model: string;
-    description: string;
-    etr: Date | null;
+    issue_description: string; // description of the issue
+    technician_notes?: string; // notes from the technician
+    etr?: Date;
     photo: string | null;
     timeline: {
         created_at: Date;
@@ -105,12 +106,14 @@ const mockDataCustomer: customer[] = [
 const mockDataTicket: ticket[] = [
     {
         id: '1',
+        ticket_number: '1234567890',
         customer_id: '1',
         device_type: 'phone',
         device_brand: 'Apple',
         device_model: 'iPhone 13',
-        description: 'The phone is not charging',
-        etr: new Date(),
+        issue_description: 'The phone is not charging',
+        technician_notes: undefined,
+        etr: undefined,
         photo: null,
         timeline: {
             created_at: new Date(),
@@ -123,17 +126,18 @@ const mockDataTicket: ticket[] = [
             total: 160,
             paid: false,
         },
-        status: 'Queued',
-        ticket_number: '1234567890',
+        status: 'queued',
     },
     {
         id: '2',
+        ticket_number: '1234567890',
         customer_id: '2',
         device_type: 'laptop',
         device_brand: 'Dell',
         device_model: 'Latitude 5430',
-        description: 'The laptop is not开机',
-        etr: null,
+        issue_description: 'The laptop is not开机',
+        technician_notes: undefined,
+        etr: undefined,
         photo: null,
         timeline: {
             created_at: new Date(),
@@ -146,17 +150,18 @@ const mockDataTicket: ticket[] = [
             total: 160,
             paid: false,
         },
-        status: 'Diagnosing',
-        ticket_number: '1234567890',
+        status: 'diagnosing',
     },
     {
         id: '3',
+        ticket_number: '1234567890',
         customer_id: '3',
         device_type: 'phone',
         device_brand: 'Samsung',
         device_model: 'Galaxy S23',
-        description: 'The phone is not charging',
-        etr: null,
+        issue_description: 'The phone is not charging',
+        technician_notes: undefined,
+        etr: new Date(),
         photo: null,
         timeline: {
             created_at: new Date(),
@@ -169,8 +174,7 @@ const mockDataTicket: ticket[] = [
             total: 160,
             paid: true,
         },
-        status: 'Waiting for Parts',
-        ticket_number: '1234567890',
+        status: 'waiting-for-parts',
     }
 ]
 
@@ -181,7 +185,8 @@ const mockDataTicketCard: TicketCardType[] = mockDataTicket.map((ticket) => ({
     device_type: ticket.device_type,
     device_brand: ticket.device_brand,
     device_model: ticket.device_model,
-    description: ticket.description,
+    issue_description: ticket.issue_description,
+    technician_notes: ticket.technician_notes,
     etr: ticket.etr,
     status: ticket.status,
     total_cost: ticket.payment.total,

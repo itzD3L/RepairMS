@@ -1,10 +1,9 @@
-import { TicketDetailsType, TicketType, TicketStatus, } from "@/app/lib/definitions";
+import { TicketDetailsType, TicketStatus, } from "@/app/lib/definitions";
 import Link from "next/link";
 import { Button } from "@/app/components/reusable/button";
 import { Card } from "@/app/components/reusable/card";
 import { Badge } from "@/app/components/reusable/badge";
 import { Textarea } from "@/app/components/reusable/textarea";
-import { Input } from "@/app/components/reusable/input";
 import { Label } from "@/app/components/reusable/label";
 import {
     ArrowLeft,
@@ -69,22 +68,6 @@ export default function TicketDetails({ ticket } : { ticket: TicketDetailsType }
                                     <span className="hidden md:block">Checkout</span>
                                 </Button>
                             </Link>
-                            {/* {isEditing ? (
-                                <Button
-                                    onClick={handleSave}
-                                    className="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 shadow-lg shadow-blue-500/30"
-                                >
-                                    <Save className="size-4 mr-2" />
-                                    Save Changes
-                                </Button>
-                            ) : (
-                                <Button
-                                    onClick={() => setIsEditing(true)}
-                                    className="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 shadow-lg shadow-blue-500/30"
-                                >
-                                    Edit
-                                </Button>
-                            )} */}
                             <Link href={`/ticket/${id}/edit`}>
                                 <Button
                                     className="bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-600 hover:to-blue-700 shadow-lg shadow-blue-500/30"
@@ -126,39 +109,6 @@ export default function TicketDetails({ ticket } : { ticket: TicketDetailsType }
                             <div className="space-y-4">
                                 <div>
                                     <Label>Current Status</Label>
-                                    {/* <Select
-                                        value={ticket.status}
-                                        onValueChange={(value) =>
-                                            handleStatusChange(
-                                                value as TicketStatus,
-                                            )
-                                        }
-                                        disabled={!isEditing}
-                                    >
-                                        <SelectTrigger>
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            <SelectItem value="queued">
-                                                Queued
-                                            </SelectItem>
-                                            <SelectItem value="diagnosing">
-                                                Diagnosing
-                                            </SelectItem>
-                                            <SelectItem value="waiting-parts">
-                                                Waiting for Parts
-                                            </SelectItem>
-                                            <SelectItem value="repairing">
-                                                Repairing
-                                            </SelectItem>
-                                            <SelectItem value="ready">
-                                                Ready for Pickup
-                                            </SelectItem>
-                                            <SelectItem value="completed">
-                                                Completed
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select> */}
                                     <span className="text-sm text-slate-600 font-medium">
                                         {getStatusFromSlug(status as TicketStatus)}
                                     </span>
@@ -167,23 +117,6 @@ export default function TicketDetails({ ticket } : { ticket: TicketDetailsType }
                                 <div>
                                     <Label>Estimated Completion</Label>
                                     <div className="flex items-center justify-between gap-3">
-                                        {/* <Input
-                                            type="datetime-local"
-                                            value={ticket.etr ? new Date(
-                                                ticket.etr
-                                            ) : undefined
-                                            }
-                                            onChange={(e) =>
-                                                setTicket({
-                                                    ...ticket,
-                                                    estimatedCompletionDate:
-                                                        new Date(
-                                                            e.target.value,
-                                                        ),
-                                                })
-                                            }
-                                            disabled={!isEditing}
-                                        /> */}
                                         <span className="text-sm text-slate-600">
                                             {etr ? new Date(
                                                 etr
@@ -257,19 +190,10 @@ export default function TicketDetails({ ticket } : { ticket: TicketDetailsType }
                             </h2>
                             <Textarea
                                 value={technician_notes}
-                                // onChange={(e) =>
-                                //     setTicket({
-                                //         ...ticket,
-                                //         notes: e.target.value,
-                                //     })
-                                // }
                                 placeholder="Add notes about the repair process..."
                                 rows={4}
                                 disabled={true}
                             />
-                            {/* <span className="text-sm text-slate-600">
-                                {ticket.technician_notes}
-                            </span> */}
                         </Card>
 
                         {/* Photos */}
@@ -279,21 +203,8 @@ export default function TicketDetails({ ticket } : { ticket: TicketDetailsType }
                             </h2>
                             <div className="space-y-4">
                                 <div>
-                                    {/* <h3 className="text-sm font-medium mb-2">
-                                        Before
-                                    </h3> */}
                                     {photo && photo.length > 0 ? (
                                         <div className="grid grid-cols-3 gap-3">
-                                            {/* {ticket.photo.map(
-                                                (photo, index) => (
-                                                    <img
-                                                        key={index}
-                                                        src={photo}
-                                                        alt={`Before ${index + 1}`}
-                                                        className="rounded-lg w-full h-32 object-cover"
-                                                    />
-                                                ),
-                                            )} */}
                                             <ImageModal src={photo} alt="Device Photo" />
                                         </div>
                                     ) : (
@@ -305,20 +216,6 @@ export default function TicketDetails({ ticket } : { ticket: TicketDetailsType }
                                         </div>
                                     )}
                                 </div>
-
-                                {/* {isEditing && (
-                                    <div>
-                                        <h3 className="text-sm font-medium mb-2">
-                                            After (Optional)
-                                        </h3>
-                                        <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center cursor-pointer hover:border-gray-400">
-                                            <Camera className="size-8 mx-auto text-gray-400 mb-2" />
-                                            <p className="text-sm text-gray-500">
-                                                Upload after-repair photos
-                                            </p>
-                                        </div>
-                                    </div>
-                                )} */}
                             </div>
                         </Card>
                     </div>
@@ -412,22 +309,13 @@ export default function TicketDetails({ ticket } : { ticket: TicketDetailsType }
                                     <Label>Repair Cost</Label>
                                     <div className="flex items-center gap-2">
                                         <PhilippinePeso className="size-4 text-gray-400" />
-                                        {/* <Input
-                                            type="number"
-                                            value={ticket.cost}
-                                            onChange={(e) =>
-                                                setTicket({
-                                                    ...ticket,
-                                                    cost:
-                                                        parseFloat(
-                                                            e.target.value,
-                                                        ) || 0,
-                                                })
-                                            }
-                                            disabled={!isEditing}
-                                            min="0"
-                                            step="0.01"
-                                        /> */}
+                                        {/*  map through the payment object and display the repair cost, parts cost, tax, and total */}
+                                        {Object.entries(payment).map(([key, value]) => (
+                                            <div key={key}>
+                                                <Label>{key}</Label>
+                                                <p>{value}</p>
+                                            </div>
+                                        ))}
                                     </div>
                                 </div>
                                 <Badge

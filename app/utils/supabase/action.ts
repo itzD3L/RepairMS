@@ -6,6 +6,7 @@ import { createClient } from "@/app/utils/supabase/server";
 import { cookies } from "next/headers";
 import { validStatusSlugs } from "../statusUtils";
 import { redirect } from "next/navigation";
+import { philSms } from "../sms/philsms";
 
 const ticketSchema = z.object({
     id: z.string(),
@@ -143,7 +144,7 @@ export async function createTicket(_prevState: ticketState, formData: FormData):
         }
     }
     
-    const { error } = await supabase.rpc('create_ticket', {
+    const { data, error } = await supabase.rpc('create_ticket', {
         p_customer_name: customer_name,
         p_customer_phone: customer_phone,
         p_customer_email: customer_email,
@@ -154,7 +155,15 @@ export async function createTicket(_prevState: ticketState, formData: FormData):
         p_est_time_repair: est_time_repair,
         p_photo: photoUrl,
     })
-
+    // console.log(data);
+    // {
+    //     device_type: 'laptop',
+    //     device_brand: 'Acer',
+    //     ticket_number: 'rybjkf4b',
+    //     status: 'queued',
+    //     customer_phone: '09606084615',
+    //     created_at: '2026-05-03T02:38:47.376546+00:00'
+    // }
     if (error) {
         console.error('Error creating ticket:', error.message)
         return {
@@ -163,6 +172,7 @@ export async function createTicket(_prevState: ticketState, formData: FormData):
             message: "Failed to create ticket. Please try again.",
         };
     } else {
+        // const smsResponse = await philSms()
         return {
             errors: {},
             success: true,

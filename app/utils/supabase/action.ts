@@ -6,7 +6,8 @@ import { createClient } from "@/app/utils/supabase/server";
 import { cookies } from "next/headers";
 import { validStatusSlugs } from "../statusUtils";
 import { redirect } from "next/navigation";
-import { philSms } from "../sms/philsms";
+import philSms from "../sms/philsms";
+import { buildTicketCreatedSms } from "../sms/message";
 
 const ticketSchema = z.object({
     id: z.string(),
@@ -85,6 +86,10 @@ export type ticketState = {
     errors: Partial<Record<TicketFieldKey, string[]>>;
     success: boolean;
     message: string | null;
+    philSmsResponse?: {
+        status: "success" | "error";
+        message: string | null;
+    }
 };
 
 export async function createTicket(_prevState: ticketState, formData: FormData): Promise<ticketState> {
@@ -155,15 +160,7 @@ export async function createTicket(_prevState: ticketState, formData: FormData):
         p_est_time_repair: est_time_repair,
         p_photo: photoUrl,
     })
-    // console.log(data);
-    // {
-    //     device_type: 'laptop',
-    //     device_brand: 'Acer',
-    //     ticket_number: 'rybjkf4b',
-    //     status: 'queued',
-    //     customer_phone: '09606084615',
-    //     created_at: '2026-05-03T02:38:47.376546+00:00'
-    // }
+
     if (error) {
         console.error('Error creating ticket:', error.message)
         return {
@@ -172,11 +169,14 @@ export async function createTicket(_prevState: ticketState, formData: FormData):
             message: "Failed to create ticket. Please try again.",
         };
     } else {
-        // const smsResponse = await philSms()
+        
+        const { customer_phone, message } = await buildTicketCreatedSms(data[0]);
+        const smsResponse = await philSms(customer_phone, message);
         return {
             errors: {},
             success: true,
             message: "Ticket created successfully.",
+            philSmsResponse: smsResponse,
         }
         
     }

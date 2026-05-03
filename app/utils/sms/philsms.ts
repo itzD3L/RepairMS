@@ -1,6 +1,6 @@
-export const philSms = async (phoneNumber: string, message: string, sender_id: string = "ToyexFix") => {
+export default async function philSms(phoneNumber: string , message: string, sender_id: string = "PhilSMS") {
     try {
-        const response = await fetch("https://dashboard.philsms.com/api/v3/sms/send", {
+        const response = await fetch(process.env.PHIL_SMS_API_ENDPOINT!, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",

@@ -87,6 +87,11 @@ export default function TicketAdd() {
 
         if (state.success) {
             toast.success(state.message);
+            if (state.philSmsResponse?.status === "success") {
+                toast.success(state.philSmsResponse.message);
+            } else {
+                toast.error(state.philSmsResponse?.message);
+            }
             const timeout = setTimeout(() => {
                 router.push("/queued");
                 router.refresh();
